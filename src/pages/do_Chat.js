@@ -16,7 +16,7 @@ import {
 } from "@firebase/firestore";
 import User from "../components/User";
 import signout from "../images/right-from-bracket-solid.svg";
-import dp from '../images/dp1.jpg';
+import dp from "../images/dp1.jpg";
 
 const DoChat = () => {
   const { userLogOut } = useAuth();
@@ -47,7 +47,7 @@ const DoChat = () => {
     });
   }
 
-  async function update () {
+  async function update() {
     const colRef = collection(db, "users");
     const docRef = doc(colRef, USER.uid);
     await updateDoc(docRef, {
@@ -65,7 +65,7 @@ const DoChat = () => {
       setLoading(false);
     });
     setUsers(user);
-     }, []);
+  }, []);
   return (
     !loading && (
       <div className="do-chat_page">

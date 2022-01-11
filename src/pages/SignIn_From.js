@@ -9,7 +9,7 @@ import Input from "../components/Input";
 const SignInForm = () => {
   const [signInVal, setSignInVal] = useState("");
   const [signInPass, setSignInPass] = useState("");
-  
+
   const [error, setError] = useState("");
   const { createUser } = useAuth();
   const history = useHistory();

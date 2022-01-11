@@ -4,8 +4,7 @@ import Input from "../components/Input";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { auth } from "../Firebase/config";
 import { db } from "../Firebase/config";
-import {updateDoc, collection, doc} from "@firebase/firestore";
-
+import { updateDoc, collection, doc } from "@firebase/firestore";
 
 const UserInfo = () => {
   const [userName, setUserName] = useState();
@@ -14,7 +13,6 @@ const UserInfo = () => {
   const { updateUser } = useAuth();
 
   const history = useHistory();
-
 
   async function updateUserInfo() {
     if (userName === "") {
