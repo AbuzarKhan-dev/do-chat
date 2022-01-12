@@ -3,14 +3,14 @@ import dp from "../images/dp1.jpg";
 const User = ({
   photo,
   name,
-  clasname,
+  classname,
   wrapperclass,
   insidewrapclass,
   onclick,
   id,
 }) => {
   return (
-    <div className={clasname} onClick={onclick}>
+    <div className={classname} onClick={onclick}>
       <div className={wrapperclass}>
         <div className={insidewrapclass} id={id}>
           <img src={photo ? photo : dp} />

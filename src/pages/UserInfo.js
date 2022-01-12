@@ -1,10 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useAuth } from "../AuthContext";
 import Input from "../components/Input";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import { auth } from "../Firebase/config";
-import { db } from "../Firebase/config";
-import { updateDoc, collection, doc } from "@firebase/firestore";
 
 const UserInfo = () => {
   const [userName, setUserName] = useState();

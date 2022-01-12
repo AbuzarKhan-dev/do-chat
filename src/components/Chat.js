@@ -6,23 +6,23 @@ import moment from "moment";
 function Chat({ user, msgs }) {
   const [value, setValue] = useState("");
 
-  const USER = auth.currentUser;
-
+  const currUser = auth.currentUser;
+  console.log(user)
   async function createMessage(user, value) {
-    const USER1 = USER.uid;
-    const USER2 = user.userUid;
-    const Id = USER1 > USER2 ? `${USER1 + USER2}` : `${USER2 + USER1}`;
-    const MessageColRef = query(collection(db, "message"));
-    const MessageDocRef = query(doc(MessageColRef, Id));
+    const user1 = currUser.uid;
+    const user2 = user.userUid;
+    const id = user1 > user2 ? `${user1 + user2}` : `${user2 + user1}`;
+    const messageColRef = collection(db, "message");
+    const messageDocRef = doc(messageColRef, id);
     setValue("");
     try {
-      await addDoc(collection(MessageDocRef, "messages"), {
-        sentBy: USER.uid,
+      await addDoc(collection(messageDocRef, "messages"), {
+        sentBy: currUser.uid,
         text: value,
         createAt: Timestamp.fromDate(new Date()),
       });
     } catch (e) {
-      console.log("errror:", e);
+      console.log("error:", e);
     }
   }
 
@@ -35,10 +35,10 @@ function Chat({ user, msgs }) {
           </div>
 
           {msgs?.map((msg) => (
-            <ul className={USER.uid === msg.sentBy ? "user1" : "user2"}>
+            <ul className={currUser.uid === msg.sentBy ? "user1" : "user2"}>
               <li
                 key={msg.id}
-                className={USER.uid === msg.sentBy ? "sender" : "receiver"}
+                className={currUser.uid === msg.sentBy ? "sender" : "receiver"}
               >
                 <p1>{msg.text}</p1>
                 <p2>{moment(msg.createdAt).calendar()}</p2>

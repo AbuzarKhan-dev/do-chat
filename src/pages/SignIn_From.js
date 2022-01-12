@@ -9,11 +9,10 @@ import Input from "../components/Input";
 const SignInForm = () => {
   const [signInVal, setSignInVal] = useState("");
   const [signInPass, setSignInPass] = useState("");
-
   const [error, setError] = useState("");
   const { createUser } = useAuth();
   const history = useHistory();
-  const USER = auth.currentUser;
+  const user = auth.currentUser;
 
   async function signUp(e) {
     e.preventDefault();
@@ -35,16 +34,16 @@ const SignInForm = () => {
   }
 
   useEffect(() => {
-    if (USER) {
-      const unsub = setDoc(doc(db, "users", USER.uid), {
-        name: USER.displayName,
-        photoURL: USER.photoURL,
-        userUid: USER.uid,
-        email: USER.email,
+    if (user) {
+      const unsub = setDoc(doc(db, "users", user.uid), {
+        name: user.displayName,
+        photoURL: user.photoURL,
+        userUid: user.uid,
+        email: user.email,
       });
       return unsub;
     }
-  }, [USER]);
+  }, [user]);
 
   return (
     <div className="auth_container">
@@ -59,7 +58,7 @@ const SignInForm = () => {
               styleclass="form_input"
               value={signInVal}
               type="username"
-              placeholder="User name"
+              placeholder="Email"
               onchange={(e) => setSignInVal(e.target.value)}
             />
             <Input

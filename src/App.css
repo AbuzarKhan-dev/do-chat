@@ -24,7 +24,7 @@ body {
 }
 
 .welcome_page_main_container {
-  width: 52%;
+  min-width: 52%;
   display: flex;
   justify-content: center;
   align-items: center;

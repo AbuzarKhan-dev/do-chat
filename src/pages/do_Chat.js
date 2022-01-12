@@ -24,9 +24,9 @@ const DoChat = () => {
   const [chat, setChat] = useState({});
   const [users, setUsers] = useState([]);
   const [Msg, setMsg] = useState([]);
-  const USER = auth.currentUser;
+  const currUser = auth.currentUser;
   let user = [];
-  const USER1 = USER.uid;
+  const user1 = currUser.uid;
   const history = useHistory();
   function logOut() {
     userLogOut();
@@ -35,11 +35,10 @@ const DoChat = () => {
 
   function userInfo(user) {
     setChat(user);
-
-    const USER2 = user.userUid;
-    const Id = USER1 > USER2 ? `${USER1 + USER2}` : `${USER2 + USER1}`;
-    const CollRef = collection(db, "message", Id, "messages");
-    const q = query(CollRef, orderBy("createAt", "asc"));
+    const user2 = user.userUid;
+    const Id = user1 > user2 ? `${user1 + user2}` : `${user2 + user1}`;
+    const collRef = collection(db, "message", Id, "messages");
+    const q = query(collRef, orderBy("createAt", "asc"));
     onSnapshot(q, (snapshot) => {
       let msg = [];
       snapshot.docs.map((doc) => msg.push(doc.data()));
@@ -49,23 +48,24 @@ const DoChat = () => {
 
   async function update() {
     const colRef = collection(db, "users");
-    const docRef = doc(colRef, USER.uid);
+    const docRef = doc(colRef, currUser.uid);
     await updateDoc(docRef, {
-      name: USER.displayName,
-      photoURL: USER.photoURL,
+      name: currUser.displayName,
+      photoURL: currUser.photoURL,
     });
-  }
+  }  
 
   useEffect(() => {
-    const ColRef = collection(db, "users");
-    const q = query(ColRef, where("userUid", "not-in", [USER.uid]));
+    update();
+    const colRef = collection(db, "users");
+    const q = query(colRef, where("userUid", "not-in", [currUser.uid]));
     onSnapshot(q, (snapshot) => {
       snapshot.docs.map((doc) => user.push(doc.data()));
-      update();
       setLoading(false);
     });
     setUsers(user);
   }, []);
+
   return (
     !loading && (
       <div className="do-chat_page">
@@ -78,8 +78,8 @@ const DoChat = () => {
               <div className="current_user">
                 <div className="current_user_info">
                   <User
-                    photo={USER.photoURL}
-                    name={USER.displayName}
+                    photo={currUser.photoURL}
+                    name={currUser.displayName}
                     clasname="user"
                     wrapperclass="user_wrapper"
                     insidewrapclass="user_inside_wrapper"
@@ -101,7 +101,7 @@ const DoChat = () => {
                     id={user.uid}
                     photo={user.photoURL}
                     name={user.name}
-                    clasname="users"
+                    classname="users"
                     wrapperclass="users_wrapper"
                     insidewrapclass="users_inside_wrapper"
                     onclick={() => userInfo(user)}
